@@ -1,0 +1,34 @@
+html
+head
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="custom.css" type="text/css">   
+   title Person
+   body
+      form(action = "/signup", method = "POST" class="form-group" autocomplete="off")
+        div
+           label(for = "name") Name:  
+            span.red #{message_name}
+           input(name = "name" class="form-control"  autocomplete="off" class="myinput")
+        br
+        div
+           label(for = "password") password:
+            span.red #{message_pass} 
+           input(name = "password"  type="password" class="form-control" class="myinput")
+        br
+        div
+           label(for = "age") age: 
+            span.red #{message_age} 
+           input(name = "age"  class="form-control" class="myinput")
+        br
+        div
+           label(for = "email") email:
+            span.red #{message_email}  
+           input(name = "email"  class="form-control" class="myinput")
+        br
+        div
+           label(for = "male") male
+           select(name = "sx" class = "custom-select")
+            option(value = "male") male
+            option(value = "female") female
+        br
+        button(type = "submit" class="btn btn-primary btn-block") Create new person

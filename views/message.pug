@@ -1,0 +1,17 @@
+html
+head
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="custom.css" type="text/css">   
+   title Message
+   body
+   each person in message
+    h3 #{person.name}
+div(class="chart-container" style="position: relative; height:400px; width:400px")
+ canvas(id="myChart" width="400px" height="400px")
+
+div(class="chart-container" style="position: relative; height:400px; width:400px")
+ canvas(id="myChart1" width="400px" height="400px") 
+  script
+   include ../node_modules/chart.js/dist/Chart.js
+   include ../chart.js
+  
