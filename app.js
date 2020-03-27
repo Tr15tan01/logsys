@@ -133,11 +133,7 @@ else {
 })
 
 app.get('/', (req, res) => {
-  Person.findOne({name: 'burata'}, function(err, user) {
-    console.log(user)
-    res.json('hi - ' + user.name);
-  })
-  
+    res.json('hi - ');  
 })
 
 
