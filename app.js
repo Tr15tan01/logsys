@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const port = process.env.PORT || 3000;
 
 app.set('view engine', 'pug');
 app.set('views', './views');
@@ -148,4 +149,4 @@ app.get('/message', (req, res) => {
   }).skip(2).limit(3);
 })
 
-app.listen(3000);
+app.listen(port);
