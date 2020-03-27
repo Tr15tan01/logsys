@@ -2,6 +2,9 @@
   "name": "logsys",
   "version": "1.0.0",
   "main": "app.js",
+  "engines": { 
+      "node": "12.16.1" 
+   }
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
