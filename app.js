@@ -133,7 +133,7 @@ else {
 })
 
 app.get('/', (req, res) => {
-    res.json('hi - ');  
+    res.render('find');  
 })
 
 
