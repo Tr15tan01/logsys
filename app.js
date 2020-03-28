@@ -38,7 +38,7 @@ var personSchema = mongoose.Schema({
 
 var Person = mongoose.model('Person', personSchema, 'col');
 
-app.get('/signup', (req, res) => {
+app.get('/', (req, res) => {
   res.render('signup')
 })
 
@@ -133,11 +133,7 @@ else {
 })
 
 app.get('/', (req, res) => {
-  Person.findOne({name: 'burata'}, function(err, user) {
-    console.log(user)
-    res.json('hi - ' + user.name);
-  })
-  
+  res.render('find');  
 })
 
 
