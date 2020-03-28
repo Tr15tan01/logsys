@@ -134,6 +134,7 @@ else {
 
 app.get('/', (req, res) => {
   res.render('find');  
+    res.render('find');  
 })
 
 
