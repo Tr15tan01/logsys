@@ -51,7 +51,7 @@ bcrypt.genSalt(saltRounds, function (err, salt) {
       } else {
         //console.log(hash)
         myStr = hash;
-          res.render('test', {message: myStr});
+          res.render('signup');
         //$2a$10$FEBywZh8u9M0Cec/0mWep.1kXrwKeiWDba6tdKvDfEBjyePJnDT7K
       }
     })
@@ -75,7 +75,7 @@ app.post('/signup', (req, res) => {
         if (err) {
           throw err
         } else {
-          console.log(hash)
+         // console.log(hash)
           newPerson.password = hash;
         }
       })
