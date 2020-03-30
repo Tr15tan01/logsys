@@ -45,6 +45,25 @@ app.get('/', (req, res) => {
 
 
 app.post('/signup', (req, res) => {
+  
+  //encryoting password
+  const saltRounds = 10
+ 
+  bcrypt.genSalt(saltRounds, function (err, salt) {
+    if (err) {
+      throw err
+    } else {
+      bcrypt.hash(newPerson.password, salt, function(err, hash) {
+        if (err) {
+          throw err
+        } else {
+          console.log(hash)
+          newPerson.password = hash;
+        }
+      })
+    }
+  })
+
   var newPerson = new Person({
     name: req.body.name,
     password: req.body.password,
@@ -53,24 +72,6 @@ app.post('/signup', (req, res) => {
     sx: req.body.sx
   })
 
-  //encryoting password
-  const saltRounds = 10
- 
-bcrypt.genSalt(saltRounds, function (err, salt) {
-  if (err) {
-    throw err
-  } else {
-    bcrypt.hash(newPerson.password, salt, function(err, hash) {
-      if (err) {
-        throw err
-      } else {
-        console.log(hash)
-        newPerson.password = hash;
-        //$2a$10$FEBywZh8u9M0Cec/0mWep.1kXrwKeiWDba6tdKvDfEBjyePJnDT7K
-      }
-    })
-  }
-})
 
   Person.findOne({name: newPerson.name}, (err, user) => {
     if(user) {
