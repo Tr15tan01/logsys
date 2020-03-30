@@ -51,12 +51,13 @@ bcrypt.genSalt(saltRounds, function (err, salt) {
       } else {
         //console.log(hash)
         myStr = hash;
+          res.render('test', {message: hash});
         //$2a$10$FEBywZh8u9M0Cec/0mWep.1kXrwKeiWDba6tdKvDfEBjyePJnDT7K
       }
     })
   }
 })
-  res.render('test', {message: hash})
+
 })
 
 
