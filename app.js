@@ -39,25 +39,8 @@ var personSchema = mongoose.Schema({
 var Person = mongoose.model('Person', personSchema, 'col');
 
 app.get('/', (req, res) => {
-    const saltRounds = 10
- var myStr = 'password';
-bcrypt.genSalt(saltRounds, function (err, salt) {
-  if (err) {
-    throw err
-  } else {
-    bcrypt.hash(myStr, salt, function(err, hash) {
-      if (err) {
-        throw err
-      } else {
-        //console.log(hash)
-        myStr = hash;
-          res.render('signup');
+  res.render('signup');
         //$2a$10$FEBywZh8u9M0Cec/0mWep.1kXrwKeiWDba6tdKvDfEBjyePJnDT7K
-      }
-    })
-  }
-})
-
 })
 
 
