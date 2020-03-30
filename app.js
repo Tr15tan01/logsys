@@ -56,7 +56,7 @@ bcrypt.genSalt(saltRounds, function (err, salt) {
     })
   }
 })
-  res.render('test', {message: myStr})
+  res.render('test', {message: hash})
 })
 
 
