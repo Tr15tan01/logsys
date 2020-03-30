@@ -51,7 +51,7 @@ bcrypt.genSalt(saltRounds, function (err, salt) {
       } else {
         //console.log(hash)
         myStr = hash;
-          res.render('test', {message: hash});
+          res.render('test', {message: myStr});
         //$2a$10$FEBywZh8u9M0Cec/0mWep.1kXrwKeiWDba6tdKvDfEBjyePJnDT7K
       }
     })
@@ -150,11 +150,12 @@ else {
   })
 })
 
+/*
 app.get('/', (req, res) => {
   res.render('find');  
     res.render('find');  
 })
-
+*/
 
 
 app.get('/message', (req, res) => {
