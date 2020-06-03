@@ -112,6 +112,31 @@ app.get('/find', (req, res) => {
   res.render('find');
 });
 
+
+//testing bcrypt on heroku
+app.get('/test', (req, res) => {
+ // res.render('test', {message: psst});
+   //encryoting password
+   const saltRounds = 10
+ var psst = 'password';
+   bcrypt.genSalt(saltRounds, function (err, salt) {
+     if (err) {
+       throw err
+     } else {
+       bcrypt.hash(psst, salt, function(err, hash) {
+         if (err) {
+           throw err
+         } else {
+          // console.log(hash)
+           var psst = hash;
+           res.render('test', {message: psst});
+         }
+       })
+     }
+   })
+})
+
+
 app.post('/find', (req, res) => {
   Person.findOne ({name: req.body.name}, function(err, user, password) {
     if(user) {
