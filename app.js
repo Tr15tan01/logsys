@@ -116,24 +116,40 @@ app.get('/find', (req, res) => {
 //testing bcrypt on heroku
 app.get('/test', (req, res) => {
  // res.render('test', {message: psst});
+ 
+
    //encryoting password
    const saltRounds = 10
- var psst = 'password';
+ 
    bcrypt.genSalt(saltRounds, function (err, salt) {
      if (err) {
        throw err
      } else {
-       bcrypt.hash(psst, salt, function(err, hash) {
+       bcrypt.hash('password', salt, function(err, hash) {
          if (err) {
            throw err
          } else {
           // console.log(hash)
            var psst = hash;
            res.render('test', {message: psst});
+           var newPerson = new Person({
+            name: 'test',
+            password: psst,
+            age: 24, 
+            email: 'test',
+            sx: 'female'
+          })
+        
+           newPerson.save((err, person) => {
+            console.log('added' + person.name)
+           // res.render('find') 
+        })
          }
        })
      }
    })
+
+ 
 })
 
 
