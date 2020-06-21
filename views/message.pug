@@ -6,8 +6,9 @@ head
    body
    each person in message
     h3 #{person.name}
-div(class="chart-container" style="position: relative; height:400px; width:400px")
- canvas(id="myChart" width="400px" height="400px")
+    h3 #{person.age}
+div(class="chart-container" style="position: relative; width:800px; height:400px")
+ canvas(id="myChart" width="800px" height="400px")
 
 div(class="chart-container" style="position: relative; height:400px; width:400px")
  canvas(id="myChart1" width="400px" height="400px") 

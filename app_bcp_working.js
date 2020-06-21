@@ -9,8 +9,6 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const port = process.env.PORT || 3000;
 
-const SESS_NAME = 'customName';
-
 app.set('view engine', 'pug');
 app.set('views', './views');
 app.use(express.static('public'));
@@ -18,7 +16,7 @@ app.use(bodyParser.json());
 app.use(upload.array()); 
 app.use(bodyParser.urlencoded({ extended: true })); 
 app.use(cookieParser());
-app.use(session({secret: "Shh, its a secret!", saveUninitialized: true, resave: false, cookie: {name: 'myCookie', maxAge: 36000}}));
+app.use(session({secret: "Shh, its a secret!", saveUninitialized: true,resave: true, cookie: {maxAge: 30000}}));
 
 //mongoose.connect('mongodb://localhost/my_db', {useNewUrlParser:true, useUnifiedTopology:true});
 
@@ -113,6 +111,93 @@ app.get('/find', (req, res) => {
 });
 
 
+//testing bcrypt on heroku
+app.get('/test', (req, res) => {
+ // res.render('test', {message: psst});
+ 
+
+   //encryoting password
+   const saltRounds = 10
+ 
+   bcrypt.genSalt(saltRounds, function (err, salt) {
+     if (err) {
+       throw err
+     } else {
+       bcrypt.hash('password', salt, function(err, hash) {
+         if (err) {
+           throw err
+         } else {
+          // console.log(hash)
+           var psst = hash;
+           res.render('test', {message: psst});
+           var newPerson = new Person({
+            name: 'test',
+            password: psst,
+            age: 24, 
+            email: 'test',
+            sx: 'female'
+          })
+        
+           newPerson.save((err, person) => {
+            console.log('added' + person.name)
+           // res.render('find') 
+        })
+         }
+       })
+     }
+   })
+
+ 
+})
+
+//test test test test test test
+
+app.get('/signup_test', (req, res) => {
+  res.render('signup_test');
+        //$2a$10$FEBywZh8u9M0Cec/0mWep.1kXrwKeiWDba6tdKvDfEBjyePJnDT7K
+})
+
+app.post('/signup_test', (req, res) => {
+  var newPerson = new Person({
+    name: 'bob',
+    password: req.body.password,
+    age: 23, 
+    email: 'daty',
+    sx: 'female'
+  })
+  //encryoting password
+  const saltRounds = 10
+ 
+  bcrypt.genSalt(saltRounds, function (err, salt) {
+    if (err) {
+      throw err
+    } else {
+      bcrypt.hash(req.body.password, salt, function(err, hash) {
+        if (err) {
+          throw err
+        } else {
+         // console.log(hash)
+          newPerson.password = hash;
+          newPerson.save((err, person) => {
+            console.log('added' + person.name)
+            res.render('test', {message: newPerson.password}) 
+        })
+        }
+      })
+    }
+  })
+
+ 
+
+
+    
+
+     
+
+})
+
+
+//end of test test test test test test
 
 app.post('/find', (req, res) => {
   Person.findOne ({name: req.body.name}, function(err, user, password) {
@@ -125,10 +210,6 @@ app.post('/find', (req, res) => {
       res.render('find', {message: 'passwoed problem'});
         } else {
           console.log("Password matches!")
-          sess = req.session;
-          sess.email = user.email;
-          sess.userName = user.name;
-          console.log('sess', sess)
           res.render('secret', {message : 'this is secret page: user - ' + user.name })
         }
       })
@@ -140,41 +221,19 @@ else {
   })
 })
 
-
-app.get('/test', (req, res) => {
-  if(req.session.userName) {
-  sess = req.session;
-
-  console.log('session_test', sess)
-  res.render('test', {message: sess.userName}); 
-  } else {
-    res.redirect('/find')
-  }
+/*
+app.get('/', (req, res) => {
+  res.render('find');  
+    res.render('find');  
 })
+*/
 
-app.get('/secret', (req, res) => {
-  if(req.session.userName) {
-  sess = req.session;
-console.log('secret', sess)
-  console.log('session_test', sess)
-  res.render('secret', {message: sess.userName}); 
-  } else {
-    res.redirect('/find')
-  }
-})
-
-app.get('/logout', (req, res) => {
-  req.session.destroy();
-  //req.session.name = null;
-  res.redirect('/find')
-})
 
 app.get('/message', (req, res) => {
-  
   Person.find(function(err, user) {
-    console.log(user)
-    res.render('message', {message: user, age:user.age})
-  }).skip(1).limit(3);
+    //console.log(user)
+    res.render('message', {message: user})
+  }).skip(2).limit(3);
 })
 
 app.listen(port);
