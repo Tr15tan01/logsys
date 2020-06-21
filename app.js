@@ -18,7 +18,14 @@ app.use(bodyParser.json());
 app.use(upload.array()); 
 app.use(bodyParser.urlencoded({ extended: true })); 
 app.use(cookieParser());
-app.use(session({secret: "Shh, its a secret!", saveUninitialized: true, resave: false, cookie: {name: 'myCookie', maxAge: 36000}}));
+app.use(session({secret: "Shh, its a secret!", saveUninitialized: false, resave: false, cookie: {name: 'myCookie', maxAge: 36000}}));
+// caching disabled for every route, back button problem
+app.use(function(req, res, next) {
+  res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+  next();
+});
+
+
 
 //mongoose.connect('mongodb://localhost/my_db', {useNewUrlParser:true, useUnifiedTopology:true});
 
@@ -109,6 +116,7 @@ app.post('/signup', (req, res) => {
 })
 
 app.get('/find', (req, res) => {
+  //res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
   res.render('find');
 });
 
@@ -128,7 +136,8 @@ app.post('/find', (req, res) => {
           sess = req.session;
           sess.email = user.email;
           sess.userName = user.name;
-          console.log('sess', sess)
+          console.log('sess', sess);
+         // res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
           res.render('secret', {message : 'this is secret page: user - ' + user.name })
         }
       })
@@ -146,6 +155,7 @@ app.get('/test', (req, res) => {
   sess = req.session;
 
   console.log('session_test', sess)
+  //res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
   res.render('test', {message: sess.userName}); 
   } else {
     res.redirect('/find')
@@ -156,7 +166,8 @@ app.get('/secret', (req, res) => {
   if(req.session.userName) {
   sess = req.session;
 console.log('secret', sess)
-  console.log('session_test', sess)
+  console.log('session_test', sess);
+  //res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
   res.render('secret', {message: sess.userName}); 
   } else {
     res.redirect('/find')
