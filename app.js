@@ -47,6 +47,14 @@ app.get('/', (req, res) => {
 
 app.post('/signup', (req, res) => {
   
+  var newPerson = new Person({
+    name: req.body.name,
+    password: req.body.password,
+    age: req.body.age, 
+    email: req.body.email,
+    sx: req.body.sx
+  })
+
   //encryoting password
   const saltRounds = 10
  
@@ -60,20 +68,44 @@ app.post('/signup', (req, res) => {
         } else {
          // console.log(hash)
           newPerson.password = hash;
+          Person.findOne({name: newPerson.name}, (err, user) => {
+            if(user) {
+              console.log('user exists')
+              res.render('signup', {message_name: user.name + ' - user already exists'})
+            } else if(newPerson.name.length < 4) {
+              console.log('name too short')
+              res.render('signup', {message_name: ' - Name must be more than 4 characters'})
+            }  else if(newPerson.name.length > 12) {
+              console.log('name too long')
+              res.render('signup', {message_name: ' - Name must be less than 12 characters'})
+            }    else if(newPerson.password.length < 6) {
+              console.log('ps too short')
+              res.render('signup', {message_pass: ' - Password is too short'})
+            }  else if(newPerson.password.length > 156) {
+              console.log('ps too long')
+              res.render('signup', {message_pass: ' - Password is too long'})
+            }   else if(newPerson.age == '') {
+              console.log('age not pr')
+              res.render('signup', {message_age: ' - Age is required'})
+            }  else if(newPerson.email == '') {
+              console.log('ps too long')
+              res.render('signup', {message_email: ' - email is not provided'})
+            } 
+            
+            else {
+              newPerson.save((err, person) => {
+                  console.log('added' + person.name)
+                  res.render('find') 
+              })
+            }
+          })
         }
       })
     }
   })
 
-  var newPerson = new Person({
-    name: req.body.name,
-    password: req.body.password,
-    age: req.body.age, 
-    email: req.body.email,
-    sx: req.body.sx
-  })
 
-
+/*
   Person.findOne({name: newPerson.name}, (err, user) => {
     if(user) {
       console.log('user exists')
@@ -105,7 +137,7 @@ app.post('/signup', (req, res) => {
       })
     }
   })
-
+*/
 })
 
 app.get('/find', (req, res) => {
@@ -152,6 +184,54 @@ app.get('/test', (req, res) => {
  
 })
 
+//test test test test test test
+
+app.get('/signup_test', (req, res) => {
+  res.render('signup_test');
+        //$2a$10$FEBywZh8u9M0Cec/0mWep.1kXrwKeiWDba6tdKvDfEBjyePJnDT7K
+})
+
+app.post('/signup_test', (req, res) => {
+  var newPerson = new Person({
+    name: 'bob',
+    password: req.body.password,
+    age: 23, 
+    email: 'daty',
+    sx: 'female'
+  })
+  //encryoting password
+  const saltRounds = 10
+ 
+  bcrypt.genSalt(saltRounds, function (err, salt) {
+    if (err) {
+      throw err
+    } else {
+      bcrypt.hash(req.body.password, salt, function(err, hash) {
+        if (err) {
+          throw err
+        } else {
+         // console.log(hash)
+          newPerson.password = hash;
+          newPerson.save((err, person) => {
+            console.log('added' + person.name)
+            res.render('test', {message: newPerson.password}) 
+        })
+        }
+      })
+    }
+  })
+
+ 
+
+
+    
+
+     
+
+})
+
+
+//end of test test test test test test
 
 app.post('/find', (req, res) => {
   Person.findOne ({name: req.body.name}, function(err, user, password) {
