@@ -183,9 +183,15 @@ app.get('/logout', (req, res) => {
 app.get('/message', (req, res) => {
   
   Person.find(function(err, user) {
-    console.log(user)
-    res.render('message', {message: user, age:user.age})
+    //console.log(user)
+    res.render('message', {message: user})
   }).skip(1).limit(3);
 })
+
+app.get('/data', (req, res) => {
+
+    res.render('data', {message: 'lol'})
+})
+
 
 app.listen(port);

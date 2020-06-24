@@ -4,9 +4,12 @@ head
 <link rel="stylesheet" href="custom.css" type="text/css">   
    title Message
    body
+   a(href='/data') data
    each person in message
-    h3 #{person.name}
+    h3#test1 #{person.name}
     h3 #{person.age}
+    h3 #{person.email}
+   p#test #{boulder}
 div(class="chart-container" style="position: relative; width:800px; height:400px")
  canvas(id="myChart" width="800px" height="400px")
 

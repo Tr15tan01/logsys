@@ -1,0 +1,20 @@
+html
+head
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="custom.css" type="text/css">   
+   title Message
+   body
+   a(href='/message') message
+   div
+    a person #{message}
+    form(action = "/data", method = "POST" class="form-group" autocomplete="off")
+        div
+           label(for = "name") Name: 
+           input(name = "name" class="form-control"  autocomplete="off" class="myinput")
+        br
+        div
+           label(for = "password") Password: 
+           input(name = "password" class="form-control"  autocomplete="off" class="myinput")
+        br
+        
+        button(type = "submit" class="btn btn-primary btn-block") Find person    

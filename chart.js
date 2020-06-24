@@ -1,8 +1,10 @@
 var ctx = document.getElementById('myChart').getContext('2d');
+var boulder = document.getElementById('test1').innerHTML;
+console.log(boulder[1])
   var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['ქალაქი', 'მეორე', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['ქალაქი', 'მეორე', 'Yellow', 'Green', 'Purple', boulder],
         datasets: [{
             label: 'რაოდენობა',
             data: [12, 2, 3, 5, 2, 3],
